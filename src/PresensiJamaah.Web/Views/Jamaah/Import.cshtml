@@ -1,0 +1,88 @@
+@using PresensiJamaah.Application.Services
+@model JamaahImportViewModel
+@{
+    ViewData["Title"] = "Impor Jamaah";
+    var result = Model.Result;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Impor Jamaah dari Excel</h1>
+    <a asp-action="Index" class="btn btn-outline-secondary">Kembali</a>
+</div>
+
+<div class="row">
+    <div class="col-lg-7">
+        <div class="card mb-3">
+            <div class="card-body">
+                <ol class="mb-3 ps-3">
+                    <li>Unduh template, lalu isi data jamaah pada sheet <strong>Data Jamaah</strong> mulai baris 2.</li>
+                    <li>Maksimal @JamaahImportService.MaxBaris baris dan ukuran file 2 MB.</li>
+                    <li>Unggah file di bawah ini. Nomor Jamaah dibuat otomatis.</li>
+                </ol>
+                <a asp-action="Template" class="btn btn-outline-success mb-3">Unduh Template (.xlsx)</a>
+
+                <form asp-action="Import" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">File Excel</label>
+                        <input type="file" id="file" name="file" class="form-control" accept=".xlsx" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Impor</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.ErrorFile))
+{
+    <div class="alert alert-danger">@Model.ErrorFile</div>
+}
+
+@if (result is not null)
+{
+    if (result.Berhasil)
+    {
+        <div class="alert alert-success">
+            <strong>@result.Diimpor jamaah</strong> berhasil diimpor.
+            @if (result.Dilewati.Count > 0)
+            {
+                <span>@result.Dilewati.Count baris dilewati.</span>
+            }
+            <a asp-action="Index" class="alert-link ms-2">Lihat daftar jamaah</a>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            Impor dibatalkan: terdapat <strong>@result.Kesalahan.Count baris</strong> yang perlu diperbaiki.
+            Tidak ada data yang disimpan. Perbaiki file lalu unggah ulang.
+        </div>
+
+        <table class="table table-sm table-bordered">
+            <thead><tr><th style="width:90px">Baris</th><th>Masalah</th></tr></thead>
+            <tbody>
+            @foreach (var e in result.Kesalahan)
+            {
+                <tr>
+                    <td>@(e.BarisKe > 0 ? e.BarisKe.ToString() : "-")</td>
+                    <td>@e.Pesan</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+
+    if (result.Dilewati.Count > 0)
+    {
+        <h2 class="h6 mt-3">Baris dilewati (sudah terdaftar / ganda)</h2>
+        <table class="table table-sm table-bordered">
+            <thead><tr><th style="width:90px">Baris</th><th>Keterangan</th></tr></thead>
+            <tbody>
+            @foreach (var d in result.Dilewati)
+            {
+                <tr><td>@d.BarisKe</td><td>@d.Pesan</td></tr>
+            }
+            </tbody>
+        </table>
+    }
+}

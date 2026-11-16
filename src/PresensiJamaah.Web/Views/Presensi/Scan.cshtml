@@ -1,0 +1,63 @@
+@using PresensiJamaah.Domain.Entities
+@model IReadOnlyList<EventOccurrence>
+@{
+    ViewData["Title"] = "Scan Presensi";
+}
+
+<div class="mx-auto text-center" style="max-width: 720px;">
+    <h1 class="h3 mb-2">Scan Presensi</h1>
+
+    @if (Model.Count == 0)
+    {
+        <p class="text-muted mb-3">
+            Saat ini tidak ada event yang berlangsung. Presensi hanya tercatat selama waktu event.
+            <a asp-controller="Event" asp-action="Index">Lihat daftar event</a>
+        </p>
+    }
+    else
+    {
+        <p class="text-muted mb-3">
+            Event berlangsung saat ini:
+            <strong>@string.Join(", ", Model.Select(o => $"{o.Nama} ({o.Mulai:HH:mm}–{o.Selesai:HH:mm})"))</strong>
+        </p>
+    }
+
+    <div id="reader" class="mx-auto border rounded overflow-hidden bg-dark" style="width: 100%; max-width: 640px; min-height: 320px;"></div>
+
+    <div class="mt-3 d-flex justify-content-center gap-2">
+        <button type="button" id="btn-start" class="btn btn-primary" hidden>Mulai kamera</button>
+        <button type="button" id="btn-stop" class="btn btn-outline-secondary" hidden>Hentikan kamera</button>
+    </div>
+    <div id="camera-error" class="text-danger mt-2" hidden></div>
+
+    <p class="text-muted mt-3 mb-0">Arahkan QR Code pada kartu jamaah ke kamera.</p>
+</div>
+
+<div class="modal fade" id="result-modal" tabindex="-1" aria-labelledby="result-title" aria-live="assertive" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg overflow-hidden">
+            <div id="result-header" class="modal-header justify-content-center py-2">
+                <span id="result-badge" class="fw-semibold text-uppercase"></span>
+            </div>
+            <div class="modal-body text-center py-5 px-4">
+                <div id="result-title" class="display-5 fw-bold"></div>
+                <div id="result-detail" class="fs-4 mt-3"></div>
+                <div id="result-extra" class="text-muted mt-3"></div>
+            </div>
+            <div class="progress rounded-0" style="height: 4px;" aria-hidden="true">
+                <div id="result-progress" class="progress-bar" style="width: 100%;"></div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" id="result-ok" class="btn btn-primary btn-lg px-5" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+<div id="scan-config" data-url="@Url.Action("Scan", "Presensi")" hidden></div>
+
+@section Scripts {
+    <script src="~/lib/html5-qrcode/html5-qrcode.min.js"></script>
+    <script src="~/js/scan.js" asp-append-version="true"></script>
+}

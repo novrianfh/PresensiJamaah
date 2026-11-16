@@ -1,0 +1,29 @@
+@using PresensiJamaah.Application.Models
+@model IReadOnlyList<JamaahDto>
+@{
+    ViewData["Title"] = "Cetak Kartu Jamaah";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3 no-print">
+    <h1 class="h3 mb-0">Cetak Kartu Jamaah <small class="text-muted">(@Model.Count)</small></h1>
+    <div class="d-flex gap-2">
+        <button type="button" class="btn btn-primary" onclick="window.print()">Cetak</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Kembali</a>
+    </div>
+</div>
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-info no-print">Belum ada jamaah aktif.</div>
+}
+
+<div class="kartu-grid">
+    @foreach (var j in Model)
+    {
+        <div class="kartu">
+            <img src="@Url.Action("Qr", new { id = j.Id })" alt="QR @j.NomorJamaah" class="kartu-qr" />
+            <div class="kartu-nama">@j.Nama</div>
+            <div class="kartu-nomor">@j.NomorJamaah</div>
+        </div>
+    }
+</div>

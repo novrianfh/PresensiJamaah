@@ -1,0 +1,16 @@
+@model JamaahFormViewModel
+@{
+    ViewData["Title"] = "Tambah Jamaah";
+}
+
+<h1 class="h3 mb-3">Tambah Jamaah</h1>
+
+<form asp-action="Create" method="post" class="col-lg-7">
+    <partial name="_Form" model="Model" />
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Batal</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

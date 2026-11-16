@@ -1,0 +1,53 @@
+@model EventFormViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+<div class="mb-3">
+    <label asp-for="Nama" class="form-label"></label>
+    <input asp-for="Nama" class="form-control" autofocus placeholder="mis. Sholat Maghrib / Kajian Ahad Pagi" />
+    <span asp-validation-for="Nama" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Deskripsi" class="form-label"></label>
+    <textarea asp-for="Deskripsi" class="form-control" rows="3"></textarea>
+    <span asp-validation-for="Deskripsi" class="text-danger"></span>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label asp-for="WaktuMulai" class="form-label"></label>
+        <input asp-for="WaktuMulai" class="form-control" />
+        <span asp-validation-for="WaktuMulai" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label asp-for="WaktuSelesai" class="form-label"></label>
+        <input asp-for="WaktuSelesai" class="form-control" />
+        <span asp-validation-for="WaktuSelesai" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label asp-for="Recurrence" class="form-label"></label>
+        <select asp-for="Recurrence" asp-items="Model.RecurrenceOptions" class="form-select" id="recurrence"></select>
+        <span asp-validation-for="Recurrence" class="text-danger"></span>
+        <div class="form-text">Event berulang memakai jam mulai/selesai di atas; tanggal mulai adalah kejadian pertama.</div>
+    </div>
+    <div class="col-md-6 mb-3" id="recurrence-end">
+        <label asp-for="RecurrenceEndDate" class="form-label"></label>
+        <input asp-for="RecurrenceEndDate" class="form-control" />
+        <span asp-validation-for="RecurrenceEndDate" class="text-danger"></span>
+        <div class="form-text">Kosongkan bila berulang tanpa batas.</div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        var select = document.getElementById('recurrence');
+        var end = document.getElementById('recurrence-end');
+        function sync() { end.style.display = select.value === 'None' ? 'none' : ''; }
+        select.addEventListener('change', sync);
+        sync();
+    })();
+</script>

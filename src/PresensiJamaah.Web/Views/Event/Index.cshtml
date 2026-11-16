@@ -1,0 +1,54 @@
+@using PresensiJamaah.Application.Models
+@model IReadOnlyList<EventDto>
+@{
+    ViewData["Title"] = "Event";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Event</h1>
+    <a asp-action="Create" class="btn btn-primary">Tambah Event</a>
+</div>
+
+@if (TempData["Success"] is string success)
+{
+    <div class="alert alert-success">@success</div>
+}
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Mulai</th>
+                <th>Selesai</th>
+                <th>Pengulangan</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var e in Model)
+        {
+            <tr>
+                <td>@e.Nama</td>
+                <td>@e.WaktuMulai.ToString("dd-MM-yyyy HH:mm")</td>
+                <td>@e.WaktuSelesai.ToString("HH:mm")</td>
+                <td>
+                    @e.Recurrence.ToLabel()
+                    @if (e.RecurrenceEndDate is { } end)
+                    {
+                        <small class="text-muted">sampai @end.ToString("dd-MM-yyyy")</small>
+                    }
+                </td>
+                <td class="text-end">
+                    <a asp-action="Details" asp-route-id="@e.Id" class="btn btn-sm btn-outline-primary">Detail</a>
+                    <a asp-action="Edit" asp-route-id="@e.Id" class="btn btn-sm btn-outline-secondary">Ubah</a>
+                </td>
+            </tr>
+        }
+        @if (Model.Count == 0)
+        {
+            <tr><td colspan="5" class="text-center text-muted py-4">Belum ada event.</td></tr>
+        }
+        </tbody>
+    </table>
+</div>

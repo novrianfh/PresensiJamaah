@@ -1,0 +1,45 @@
+@model JamaahFormViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+@if (!string.IsNullOrEmpty(Model.NomorJamaah))
+{
+    <div class="mb-3">
+        <label class="form-label">Nomor Jamaah</label>
+        <input class="form-control" value="@Model.NomorJamaah" readonly disabled />
+        <div class="form-text">Nomor dipakai di QR Code dan tidak dapat diubah.</div>
+    </div>
+}
+
+<div class="mb-3">
+    <label asp-for="Nama" class="form-label"></label>
+    <input asp-for="Nama" class="form-control" autofocus />
+    <span asp-validation-for="Nama" class="text-danger"></span>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label asp-for="NomorHp" class="form-label"></label>
+        <input asp-for="NomorHp" class="form-control" inputmode="tel" placeholder="081234567890" />
+        <span asp-validation-for="NomorHp" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label asp-for="TanggalLahir" class="form-label"></label>
+        <input asp-for="TanggalLahir" class="form-control" />
+        <span asp-validation-for="TanggalLahir" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label asp-for="JenisKelamin" class="form-label"></label>
+    <select asp-for="JenisKelamin" asp-items="Model.JenisKelaminOptions" class="form-select">
+        <option value="">-- Pilih --</option>
+    </select>
+    <span asp-validation-for="JenisKelamin" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Alamat" class="form-label"></label>
+    <textarea asp-for="Alamat" class="form-control" rows="3"></textarea>
+    <span asp-validation-for="Alamat" class="text-danger"></span>
+</div>

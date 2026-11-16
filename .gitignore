@@ -1,0 +1,56 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+publish/
+artifacts/
+
+# IDE / editor
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.DotSettings.user
+
+# Test & coverage
+TestResults/
+[Tt]est[Rr]esult*/
+coverage/
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+
+# Logs
+*.log
+logs/
+
+# Secrets & local config
+.env
+.env.*
+!.env.example
+secrets.json
+appsettings.*.local.json
+appsettings.Local.json
+*.pfx
+
+# Docker local data
+pgdata/
+.docker/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Claude Code local
+.claude/settings.local.json

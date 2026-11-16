@@ -1,0 +1,93 @@
+@using PresensiJamaah.Application.Models
+@model JamaahIndexViewModel
+@{
+    ViewData["Title"] = "Jamaah";
+    var result = Model.Result;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Jamaah</h1>
+    <div class="d-flex gap-2">
+        <a asp-action="KartuSemua" target="_blank" class="btn btn-outline-secondary">Cetak Semua Kartu</a>
+        <a asp-action="Import"class="btn btn-outline-success">Impor Excel</a>
+        <a asp-action="Create" class="btn btn-primary">Tambah Jamaah</a>
+    </div>
+</div>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-6">
+        <input name="search" value="@Model.Search" class="form-control"
+               placeholder="Cari nama, nomor jamaah, atau nomor HP" />
+    </div>
+    <div class="col-md-3">
+        <select name="status" class="form-select" asp-for="Status"
+                asp-items="Html.GetEnumSelectList<JamaahStatusFilter>()"></select>
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+        <button type="submit" class="btn btn-outline-primary">Cari</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Reset</a>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Nomor</th>
+                <th>Nama</th>
+                <th>Nomor HP</th>
+                <th>Jenis Kelamin</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var j in result.Items)
+        {
+            <tr>
+                <td><code>@j.NomorJamaah</code></td>
+                <td>@j.Nama</td>
+                <td>@j.NomorHp</td>
+                <td>@j.JenisKelamin.ToLabel()</td>
+                <td>
+                    @if (j.IsActive)
+                    {
+                        <span class="badge text-bg-success">Aktif</span>
+                    }
+                    else
+                    {
+                        <span class="badge text-bg-secondary">Nonaktif</span>
+                    }
+                </td>
+                <td class="text-end">
+                    <a asp-action="Details" asp-route-id="@j.Id" class="btn btn-sm btn-outline-primary">Detail</a>
+                    <a asp-action="Edit" asp-route-id="@j.Id" class="btn btn-sm btn-outline-secondary">Ubah</a>
+                </td>
+            </tr>
+        }
+        @if (result.Items.Count == 0)
+        {
+            <tr><td colspan="6" class="text-center text-muted py-4">Belum ada data jamaah.</td></tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@if (result.TotalPages > 1)
+{
+    <nav aria-label="Halaman">
+        <ul class="pagination">
+            <li class="page-item @(result.HasPrevious ? "" : "disabled")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-search="@Model.Search" asp-route-status="@Model.Status" asp-route-page="@(result.Page - 1)">Sebelumnya</a>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">Halaman @result.Page dari @result.TotalPages (@result.TotalCount data)</span>
+            </li>
+            <li class="page-item @(result.HasNext ? "" : "disabled")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-search="@Model.Search" asp-route-status="@Model.Status" asp-route-page="@(result.Page + 1)">Berikutnya</a>
+            </li>
+        </ul>
+    </nav>
+}

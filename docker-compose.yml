@@ -1,0 +1,56 @@
+# Lingkungan PENGEMBANGAN: web (hot reload) + PostgreSQL.
+# Jalankan: docker compose up --build
+# Nilai di bawah bisa diganti lewat file .env atau variabel lingkungan.
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: presensi_jamaah
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres_dev}
+    ports:
+      # Port host 5433 agar tidak bentrok dengan PostgreSQL lokal di 5432.
+      - "${DB_PORT:-5433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d presensi_jamaah"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${WEB_PORT:-5210}:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Default: Host=db;Port=5432;Database=presensi_jamaah;Username=postgres;Password=${DB_PASSWORD:-postgres_dev}
+      # Migrasi dijalankan otomatis saat start (hanya untuk pengembangan).
+      AdminSeed__ApplyMigrationsOnStartup: "true"
+      AdminSeed__Email: ${ADMIN_EMAIL:-admin@masjid.local}
+      AdminSeed__Password: ${ADMIN_PASSWORD:-Admin12345}
+    volumes:
+      - .:/src
+      # Sembunyikan bin/obj milik host (hasil build Windows) agar tidak bentrok dengan build di container.
+      - /src/src/PresensiJamaah.Web/bin
+      - /src/src/PresensiJamaah.Web/obj
+      - /src/src/PresensiJamaah.Application/bin
+      - /src/src/PresensiJamaah.Application/obj
+      - /src/src/PresensiJamaah.Domain/bin
+      - /src/src/PresensiJamaah.Domain/obj
+      - /src/src/PresensiJamaah.Infrastructure/bin
+      - /src/src/PresensiJamaah.Infrastructure/obj
+      - nuget-cache:/root/.nuget/packages
+
+volumes:
+  pgdata:
+  nuget-cache:

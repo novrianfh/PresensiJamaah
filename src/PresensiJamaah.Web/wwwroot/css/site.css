@@ -1,0 +1,253 @@
+/* ==========================================================================
+   Tema warna - palet Color Hunt 15370d / 728e6d / e5cd82 / fff2b4
+   https://colorhunt.co/palette/15370d728e6de5cd82fff2b4
+   ========================================================================== */
+:root {
+  --pj-forest: #15370D;       /* hijau tua  - warna utama, teks */
+  --pj-forest-dark: #0D2208;  /* turunan: hover/active */
+  --pj-sage: #728E6D;         /* hijau sage - aksen, border, fokus */
+  --pj-gold: #E5CD82;         /* emas       - header tabel, badge, footer */
+  --pj-cream: #FFF2B4;        /* krem       - teks di atas hijau, alert */
+  --pj-bg: #FFF9D9;           /* turunan krem: latar halaman */
+  --pj-surface: #FFFDF0;      /* turunan krem: kartu */
+
+  --bs-body-bg: var(--pj-bg);
+  --bs-body-bg-rgb: 255, 249, 217;
+  --bs-body-color: var(--pj-forest);
+  --bs-body-color-rgb: 21, 55, 13;
+  --bs-secondary-color: rgba(21, 55, 13, 0.7);
+  --bs-border-color: rgba(114, 142, 109, 0.45);
+
+  --bs-primary: var(--pj-forest);
+  --bs-primary-rgb: 21, 55, 13;
+  --bs-secondary: var(--pj-sage);
+  --bs-secondary-rgb: 114, 142, 109;
+  --bs-success: var(--pj-forest);
+  --bs-success-rgb: 21, 55, 13;
+  --bs-info: var(--pj-sage);
+  --bs-info-rgb: 114, 142, 109;
+
+  --bs-link-color: var(--pj-forest);
+  --bs-link-color-rgb: 21, 55, 13;
+  --bs-link-hover-color: var(--pj-forest-dark);
+  --bs-link-hover-color-rgb: 13, 34, 8;
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem var(--pj-bg), 0 0 0 0.25rem var(--pj-sage);
+}
+
+/* Navbar */
+.navbar {
+  --bs-navbar-color: var(--pj-cream);
+  --bs-navbar-hover-color: var(--pj-gold);
+  --bs-navbar-active-color: var(--pj-gold);
+  --bs-navbar-brand-color: var(--pj-cream);
+  --bs-navbar-brand-hover-color: var(--pj-gold);
+  background-color: var(--pj-forest);
+  border-bottom: 3px solid var(--pj-gold) !important;
+}
+
+.navbar .navbar-text {
+  color: var(--pj-cream);
+}
+
+/* Tombol */
+.btn-primary {
+  --bs-btn-color: var(--pj-cream);
+  --bs-btn-bg: var(--pj-forest);
+  --bs-btn-border-color: var(--pj-forest);
+  --bs-btn-hover-color: var(--pj-cream);
+  --bs-btn-hover-bg: var(--pj-forest-dark);
+  --bs-btn-hover-border-color: var(--pj-forest-dark);
+  --bs-btn-active-color: var(--pj-cream);
+  --bs-btn-active-bg: var(--pj-forest-dark);
+  --bs-btn-active-border-color: var(--pj-forest-dark);
+  --bs-btn-disabled-color: var(--pj-cream);
+  --bs-btn-disabled-bg: var(--pj-forest);
+  --bs-btn-disabled-border-color: var(--pj-forest);
+  --bs-btn-focus-shadow-rgb: 114, 142, 109;
+}
+
+.btn-outline-primary,
+.btn-outline-secondary,
+.btn-outline-success {
+  --bs-btn-color: var(--pj-forest);
+  --bs-btn-border-color: var(--pj-sage);
+  --bs-btn-hover-color: var(--pj-forest);
+  --bs-btn-hover-bg: var(--pj-gold);
+  --bs-btn-hover-border-color: var(--pj-gold);
+  --bs-btn-active-color: var(--pj-forest);
+  --bs-btn-active-bg: var(--pj-gold);
+  --bs-btn-active-border-color: var(--pj-gold);
+  --bs-btn-disabled-color: var(--pj-sage);
+  --bs-btn-disabled-border-color: var(--pj-sage);
+  --bs-btn-focus-shadow-rgb: 114, 142, 109;
+}
+
+.btn-outline-primary {
+  --bs-btn-border-color: var(--pj-forest);
+}
+
+.btn-outline-light {
+  --bs-btn-color: var(--pj-cream);
+  --bs-btn-border-color: var(--pj-cream);
+  --bs-btn-hover-color: var(--pj-forest);
+  --bs-btn-hover-bg: var(--pj-cream);
+  --bs-btn-hover-border-color: var(--pj-cream);
+  --bs-btn-active-color: var(--pj-forest);
+  --bs-btn-active-bg: var(--pj-cream);
+  --bs-btn-active-border-color: var(--pj-cream);
+}
+
+/* Badge status (Aktif / Nonaktif) */
+.text-bg-success {
+  color: var(--pj-cream) !important;
+  background-color: var(--pj-forest) !important;
+}
+
+.text-bg-secondary {
+  color: var(--pj-forest) !important;
+  background-color: var(--pj-gold) !important;
+}
+
+/* Alert (merah untuk error tetap dipertahankan agar bermakna) */
+.alert-success {
+  --bs-alert-color: var(--pj-forest);
+  --bs-alert-bg: var(--pj-cream);
+  --bs-alert-border-color: var(--pj-gold);
+  --bs-alert-link-color: var(--pj-forest-dark);
+}
+
+.alert-info {
+  --bs-alert-color: var(--pj-forest);
+  --bs-alert-bg: #E4ECE2;
+  --bs-alert-border-color: var(--pj-sage);
+  --bs-alert-link-color: var(--pj-forest-dark);
+}
+
+/* Kartu, list, tabel */
+.card {
+  --bs-card-bg: var(--pj-surface);
+  --bs-card-border-color: var(--pj-gold);
+}
+
+.list-group {
+  --bs-list-group-bg: var(--pj-surface);
+  --bs-list-group-border-color: rgba(114, 142, 109, 0.45);
+}
+
+.table {
+  --bs-table-border-color: rgba(114, 142, 109, 0.45);
+  --bs-table-hover-bg: rgba(229, 205, 130, 0.35);
+  --bs-table-hover-color: var(--pj-forest);
+}
+
+.table > thead > tr > th {
+  background-color: var(--pj-gold);
+  color: var(--pj-forest);
+  border-bottom-color: var(--pj-sage);
+}
+
+/* Form */
+.form-control, .form-select {
+  background-color: #fff;
+  border-color: var(--pj-sage);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--pj-forest);
+  box-shadow: 0 0 0 0.25rem rgba(114, 142, 109, 0.4);
+}
+
+.form-check-input {
+  border-color: var(--pj-sage);
+}
+
+.form-check-input:checked {
+  background-color: var(--pj-forest);
+  border-color: var(--pj-forest);
+}
+
+/* Footer */
+.footer {
+  background-color: var(--pj-gold);
+  border-top: 1px solid var(--pj-sage) !important;
+}
+
+.footer.text-muted {
+  color: var(--pj-forest) !important;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+/* Cetak kartu jamaah */
+.kartu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.kartu {
+  border: 1px dashed #666;
+  border-radius: 6px;
+  padding: 10px;
+  text-align: center;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.kartu-qr {
+  width: 150px;
+  height: 150px;
+}
+
+.kartu-nama {
+  font-weight: 600;
+  margin-top: 6px;
+  overflow-wrap: anywhere;
+}
+
+.kartu-nomor {
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+@media print {
+  .no-print, header, footer, .navbar {
+    display: none !important;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .kartu-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
